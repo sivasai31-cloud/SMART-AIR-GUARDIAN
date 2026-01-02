@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,13 +8,14 @@
   --bg:#0b0f1a; --card:#12182b; --accent:#00e5ff; --safe:#00ff9c; --warn:#ffd166; --danger:#ff4d6d;
 }
 body{margin:0;height:100vh;font-family:'Segoe UI',sans-serif;background:radial-gradient(circle at top,#111a33,var(--bg));display:flex;align-items:center;justify-content:center;color:white;}
-.app{width:380px;padding:25px;background:linear-gradient(145deg,#0f1630,#0a1020);border-radius:18px;box-shadow:0 0 40px rgba(0,229,255,0.15);animation:float 4s ease-in-out infinite;text-align:center;}
+.app{width:400px;padding:30px;background:linear-gradient(145deg,#0f1630,#0a1020);border-radius:18px;box-shadow:0 0 40px rgba(0,229,255,0.15);animation:float 4s ease-in-out infinite;text-align:center;}
 @keyframes float{0%{transform:translateY(0px);}50%{transform:translateY(-6px);}100%{transform:translateY(0px);}}
 h2{margin-bottom:5px;color:var(--accent);}
+.subtitle{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 select, button{width:100%;margin-top:14px;padding:12px;border-radius:10px;border:none;background:#1b2345;color:white;font-size:15px;transition:all 0.3s ease;}
 select:hover, button:hover{box-shadow:0 0 12px rgba(0,229,255,0.5);transform:scale(1.03);cursor:pointer;}
 button{background:linear-gradient(135deg,#00e5ff,#0077ff);color:black;font-weight:bold;}
-.result{margin-top:18px;padding:15px;border-radius:12px;text-align:center;animation:fadeIn 0.6s ease;}
+.result{margin-top:18px;padding:15px;border-radius:12px;text-align:left;animation:fadeIn 0.6s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .safe{background:rgba(0,255,156,0.15);border:1px solid var(--safe);}
 .warn{background:rgba(255,209,102,0.15);border:1px solid var(--warn);}
@@ -57,94 +57,97 @@ button{background:linear-gradient(135deg,#00e5ff,#0077ff);color:black;font-weigh
 </div>
 
 <script>
-// Language dictionary for ALL UI elements
+// Language dictionary including personalized advice
 const text = {
-  en: {
-    tagline: "AI-powered health alerts",
-    normal: "👤 Normal",
-    child: "👶 Child",
-    elderly: "🧓 Elderly",
-    selectCity: "Select City",
-    checkBtn: "Check Air Safety",
-    safe: "Safe to go outside",
-    caution: "Caution advised",
-    danger: "Dangerous air quality",
-    mask: "Wear a mask & avoid outdoors"
+  en:{
+    tagline:"AI-powered health alerts",
+    normal:"👤 Normal",
+    child:"👶 Child",
+    elderly:"🧓 Elderly",
+    selectCity:"Select City",
+    checkBtn:"Check Air Safety",
+    advice:{
+      normal:{
+        safe:"Air quality is good. Enjoy outdoor activities.",
+        caution:"Air quality moderate. Limit strenuous outdoor activity.",
+        danger:"Air quality dangerous. Avoid outdoor activities. Wear mask if necessary."
+      },
+      child:{
+        safe:"Safe for outdoor play.",
+        caution:"Limit outdoor play. Keep child hydrated.",
+        danger:"Dangerous! Keep child indoors. Avoid outdoor activities."
+      },
+      elderly:{
+        safe:"Safe for normal outdoor activity.",
+        caution:"Limit outdoor activity. Prefer indoor exercises.",
+        danger:"Dangerous! Stay indoors. Avoid any outdoor activity."
+      }
+    }
   },
-  te: {
-    tagline: "AI ఆధారిత ఆరోగ్య హెచ్చరికలు",
-    normal: "👤 సాధారణ",
-    child: "👶 పిల్లలు",
-    elderly: "🧓 వృద్ధులు",
-    selectCity: "నగరం ఎంచుకోండి",
-    checkBtn: "గాలి భద్రతను తనిఖీ చేయండి",
-    safe: "బయటికి వెళ్లడం సురక్షితం",
-    caution: "జాగ్రత్త అవసరం",
-    danger: "గాలి నాణ్యత ప్రమాదకరం",
-    mask: "మాస్క్ ధరించి బయటకు వెళ్లవద్దు"
+  te:{
+    tagline:"AI ఆధారిత ఆరోగ్య హెచ్చరికలు",
+    normal:"👤 సాధారణ",
+    child:"👶 పిల్లలు",
+    elderly:"🧓 వృద్ధులు",
+    selectCity:"నగరం ఎంచుకోండి",
+    checkBtn:"గాలి భద్రతను తనిఖీ చేయండి",
+    advice:{
+      normal:{safe:"వాతావరణం సురక్షితం. బయట కార్యకలాపాలు చేయండి.",caution:"మధ్యస్థ వాతావరణం. బలమైన శారీరక కార్యకలాపాలను పరిమితం చేయండి.",danger:"మారుపై తీవ్ర ప్రమాదం. బయటకి వెళ్లవద్దు. మాస్క్ ధరించండి."},
+      child:{safe:"పిల్లల ఆటకు సురక్షితం.",caution:"బయట ఆడే సమయాన్ని పరిమితం చేయండి. నీరు త్రాగడం జాగ్రత్త.",danger:"భయంకరం! పిల్లలను ఇంటిలో ఉంచండి. బయటకే వెళ్లవద్దు."},
+      elderly:{safe:"సాధారణ బయట కార్యకలాపాలకు సురక్షితం.",caution:"బయట కార్యకలాపాలను పరిమితం చేయండి. ఇంట్లో వ్యాయామం చేయండి.",danger:"భయంకరం! ఇంట్లో ఉండు. బయటకు వెళ్లకండి."}
+    }
   },
-  hi: {
-    tagline: "AI आधारित स्वास्थ्य चेतावनी",
-    normal: "👤 सामान्य",
-    child: "👶 बच्चा",
-    elderly: "🧓 बुजुर्ग",
-    selectCity: "शहर चुनें",
-    checkBtn: "वायु सुरक्षा जांचें",
-    safe: "बाहर जाना सुरक्षित है",
-    caution: "सावधानी आवश्यक",
-    danger: "हवा खतरनाक है",
-    mask: "मास्क पहनें और बाहर न जाएं"
+  hi:{
+    tagline:"AI आधारित स्वास्थ्य चेतावनी",
+    normal:"👤 सामान्य",
+    child:"👶 बच्चा",
+    elderly:"🧓 बुजुर्ग",
+    selectCity:"शहर चुनें",
+    checkBtn:"वायु सुरक्षा जांचें",
+    advice:{
+      normal:{safe:"वायु सुरक्षित है. बाहर गतिविधियाँ करें.",caution:"मध्यम वायु. शारीरिक गतिविधियों को सीमित करें.",danger:"खतरनाक वायु! बाहर गतिविधियों से बचें. मास्क पहनें."},
+      child:{safe:"बाहर खेलने के लिए सुरक्षित.",caution:"बच्चे की बाहरी गतिविधि सीमित करें.",danger:"खतरनाक! बच्चे को घर में रखें. बाहर न जाएं."},
+      elderly:{safe:"सुरक्षित बाहर गतिविधियों के लिए.",caution:"बाहरी गतिविधि सीमित करें. घर में व्यायाम करें.",danger:"खतरनाक! घर पर रहें. बाहर गतिविधि से बचें."}
+    }
   }
 };
 
-let lang = "en";
+let lang="en";
 
-// Function to update UI texts dynamically
-function updateUIText() {
-  document.getElementById("tagline").innerText = text[lang].tagline;
-  const mode = document.getElementById("mode");
-  mode.options[0].text = text[lang].normal;
-  mode.options[1].text = text[lang].child;
-  mode.options[2].text = text[lang].elderly;
+// Update UI text dynamically
+function updateUIText(){
+  document.getElementById("tagline").innerText=text[lang].tagline;
+  const mode=document.getElementById("mode");
+  mode.options[0].text=text[lang].normal;
+  mode.options[1].text=text[lang].child;
+  mode.options[2].text=text[lang].elderly;
+  const city=document.getElementById("city");
+  city.options[0].text=text[lang].selectCity;
+  document.getElementById("checkBtn").innerText=text[lang].checkBtn;
 
-  const city = document.getElementById("city");
-  city.options[0].text = text[lang].selectCity;
-
-  document.getElementById("checkBtn").innerText = text[lang].checkBtn;
-
-  // If output exists, re-analyze with new language
-  if(document.getElementById("output").innerHTML.trim() !== "") analyze();
+  if(document.getElementById("output").innerHTML.trim()!=="") analyze();
 }
 
-// Language toggle
-function setLang(l){
-  lang = l;
-  updateUIText();
-}
+function setLang(l){lang=l; updateUIText();}
 
-// AI Analyze function
+// AI Analyze function with personalized advice
 function analyze(){
-  const aqi = document.getElementById("city").value;
-  const mode = document.getElementById("mode").value;
-  const out = document.getElementById("output");
+  const aqi=document.getElementById("city").value;
+  const mode=document.getElementById("mode").value;
+  const out=document.getElementById("output");
+  if(!aqi){ out.innerHTML="<p>Please select a city</p>"; return; }
 
-  if(!aqi){ out.innerHTML = "<p>Please select a city</p>"; return; }
+  let threshold=mode==="normal"?100:70;
+  let cls,msg;
 
-  let threshold = mode==="normal"?100:70;
-  let cls, msg;
+  if(aqi<=threshold){ cls="safe"; msg=text[lang].advice[mode].safe; }
+  else if(aqi<=150){ cls="warn"; msg=text[lang].advice[mode].caution; }
+  else{ cls="danger"; msg=text[lang].advice[mode].danger; }
 
-  if(aqi <= threshold){
-    cls="safe"; msg=text[lang].safe;
-  }else if(aqi<=150){
-    cls="warn"; msg=text[lang].caution;
-  }else{
-    cls="danger"; msg=text[lang].danger+"<br>"+text[lang].mask;
-  }
-
-  out.innerHTML = `<div class="result ${cls}"><h3>AQI: ${aqi}</h3><p>${msg}</p></div>`;
+  out.innerHTML=`<div class="result ${cls}"><h3>AQI: ${aqi}</h3><p>${msg}</p></div>`;
 }
 
-document.getElementById("checkBtn").addEventListener("click", analyze);
+document.getElementById("checkBtn").addEventListener("click",analyze);
 updateUIText();
 </script>
 </body>
